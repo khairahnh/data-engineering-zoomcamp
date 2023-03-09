@@ -1,0 +1,37 @@
+SELECT 
+	tpep_pickup_datetime,
+	tpep_dropoff_datetime,
+	zpu."Borough" || ' / ' || zpu."Zone" as pickup_loc,
+	zpu."Borough" || ' / ' || zdo."Zone" as dropoff_loc
+FROM
+	yellow_taxi_trips AS t,
+	zones AS zpu,
+	zones AS zdo
+WHERE
+	t."PULocationID" = zpu."LocationID" AND
+	t."DOLocationID" = zdo."LocationID"
+LIMIT 100;
+
+
+
+SELECT
+    tpep_pickup_datetime,
+    tpep_dropoff_datetime,
+    DATE_TRUNC('DAY', tpep_pickup_datetime),
+    total_amount
+FROM
+    yellow_taxi_trips t
+LIMIT 100;
+
+
+
+SELECT
+    CAST(tpep_pickup_datetime AS DATE) as "day",
+    COUNT(1)
+FROM
+    yellow_taxi_trips t
+GROUP BY
+    CAST(tpep_pickup_datetime AS DATE)
+ORDER BY "day" ASC;
+
+
