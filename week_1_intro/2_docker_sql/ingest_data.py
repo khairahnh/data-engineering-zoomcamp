@@ -9,6 +9,7 @@ from time import time
 from prefect import flow, task
 from prefect.tasks import task_input_hash
 from datetime import timedelta
+from prefect_sqlalchemy import SqlAlchemyConnector
 
 @task(log_prints=True, retries=3, cache_key_fn=task_input_hash, cache_expiration=timedelta(days=1))
 def extract_data(url):
@@ -37,6 +38,7 @@ def transform_data(df):
 
 @task(log_prints=True, retries=3)
 def ingest_data(user, password, host, port, db, table_name, df):
+    
 
     postgres_url = f"postgresql://{user}:{password}@{host}:{port}/{db}"
     engine = create_engine(postgres_url)
