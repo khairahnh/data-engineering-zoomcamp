@@ -103,3 +103,8 @@ pgcli -h localhost -U root -d ny_taxi
  ##config external ip ssh
  nano .ssh/config
  
+
+ docker rm -f $(docker ps -a -q) kill all containers
+
+ docker rmi -f $(docker images -aq) kill all images
+ 
